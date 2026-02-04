@@ -1,0 +1,64 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+dist/
+.env
+.env.local
+.npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+
+# Go
+bin/
+pkg/
+src/
+*.exe
+*.test
+*.prof
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+.dockerignore
+
+# Next.js
+.next/
+out/
+build/
+
+# ForgeDev specific
+*.tsbuildinfo

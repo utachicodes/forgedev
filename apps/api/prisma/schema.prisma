@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum ProjectType {
+  WEB
+  MOBILE
+  AI_ML
+  DATA_ENG
+  DEVOPS
+  TESTING
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  fullName      String?
+  avatarUrl     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  memberships   WorkspaceMember[]
+  projects      Project[]         @relation("ProjectOwner")
+  activities    ActivityLog[]
+}
+
+model Workspace {
+  id          String            @id @default(uuid())
+  name        String
+  slug        String            @unique
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  
+  members     WorkspaceMember[]
+  projects    Project[]
+}
+
+model WorkspaceMember {
+  id          String    @id @default(uuid())
+  userId      String
+  workspaceId String
+  role        Role      @default(VIEWER)
+  joinedAt    DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@unique([userId, workspaceId])
+}
+
+model Project {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  type        ProjectType
+  workspaceId String
+  ownerId     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  workspace   Workspace   @relation(fields: [workspaceId], references: [id])
+  owner       User        @relation("ProjectOwner", fields: [ownerId], references: [id])
+  
+  // AI/ML Specific
+  datasets    Dataset[]
+  models      Model[]
+  experiments Experiment[]
+
+  // DevOps Specific
+  pipelines   Pipeline[]
+  deployments Deployment[]
+}
+
+// --- AI/ML Module ---
+
+model Dataset {
+  id          String    @id @default(uuid())
+  projectId   String
+  name        String
+  s3Path      String
+  sizeBytes   BigInt
+  createdAt   DateTime  @default(now())
+
+  project     Project   @relation(fields: [projectId], references: [id])
+}
+
+model Model {
+  id          String    @id @default(uuid())
+  projectId   String
+  name        String
+  version     String
+  framework   String    // PyTorch, TensorFlow
+  status      String    // TRAINING, READY, FAILED
+  metrics     Json?     // Accuracy, F1, etc.
+  artifactUrl String?
+  createdAt   DateTime  @default(now())
+
+  project     Project   @relation(fields: [projectId], references: [id])
+}
+
+model Experiment {
+  id          String    @id @default(uuid())
+  projectId   String
+  name        String
+  params      Json
+  metrics     Json?
+  status      String
+  startedAt   DateTime  @default(now())
+  endedAt     DateTime?
+
+  project     Project   @relation(fields: [projectId], references: [id])
+}
+
+// --- DevOps Module ---
+
+model Pipeline {
+  id          String    @id @default(uuid())
+  projectId   String
+  name        String
+  config      Json      // The pipeline definition (YAML/JSON)
+  lastRunStatus String?
+
+  project     Project   @relation(fields: [projectId], references: [id])
+}
+
+model Deployment {
+  id          String    @id @default(uuid())
+  projectId   String
+  environment String    // production, staging
+  status      String
+  url         String?
+  deployedAt  DateTime  @default(now())
+
+  project     Project   @relation(fields: [projectId], references: [id])
+}
+
+model ActivityLog {
+  id          String    @id @default(uuid())
+  userId      String
+  action      String
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+}
