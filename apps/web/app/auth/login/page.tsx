@@ -55,118 +55,133 @@ export default function LoginPage() {
             <div className="fixed inset-0 grid-pattern pointer-events-none z-0" />
             <div className="fixed inset-0 mesh-gradient pointer-events-none z-0" />
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full max-w-md relative z-10"
-            >
+            <div className="w-full max-w-md relative z-10">
                 {/* Logo */}
-                <Link href="/" className="flex items-center justify-center gap-3 mb-10 group">
-                    <Logo size={28} className="text-zinc-100 group-hover:text-white transition-colors" />
-                    <span className="text-2xl font-bold tracking-tight text-zinc-100">ForgeDev</span>
-                </Link>
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Link href="/" className="flex items-center justify-center gap-3 mb-16 group">
+                        <Logo size={32} className="text-zinc-100 group-hover:text-white transition-colors" />
+                        <span className="text-2xl font-bold tracking-tight text-zinc-100">ForgeDev</span>
+                    </Link>
+                </motion.div>
 
-                {/* Login Card */}
-                <div className="p-10 border border-white/5 rounded-2xl shadow-2xl bg-[#0a0f1c]/80 backdrop-blur-xl">
-                    <div className="text-center mb-8">
-                        <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
-                        <p className="text-zinc-400 text-sm">
-                            Sign in to access the platform
-                        </p>
-                    </div>
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="text-center mb-12"
+                >
+                    <h1 className="text-3xl font-bold mb-3">Sign In</h1>
+                    <p className="text-zinc-400 text-base">
+                        Access your enterprise development environment
+                    </p>
+                </motion.div>
 
-                    {error && (
-                        <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center gap-2 text-sm text-red-400">
-                            <AlertCircle size={16} />
-                            {error}
-                        </div>
-                    )}
+                {error && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="mb-8 p-4 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center gap-2 text-sm text-red-400"
+                    >
+                        <AlertCircle size={16} />
+                        {error}
+                    </motion.div>
+                )}
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
-                                Email Address
-                            </label>
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
-                                <input
-                                    type="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-[#050914]/50 border border-zinc-800 rounded-lg text-white focus:border-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-700"
-                                    placeholder="you@company.com"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
-                                Password
-                            </label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
-                                <input
-                                    type="password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-[#050914]/50 border border-zinc-800 rounded-lg text-white focus:border-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-700"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex items-center justify-between text-sm">
-                            <label className="flex items-center gap-2 text-zinc-400 cursor-pointer hover:text-zinc-300">
-                                <input type="checkbox" className="rounded border-zinc-700 bg-[#050914]/50 text-zinc-500 focus:ring-0 checked:bg-zinc-600" />
-                                Remember me
-                            </label>
-                            <Link href="/auth/forgot-password" className="text-zinc-400 hover:text-zinc-300 transition-colors font-medium">
-                                Forgot password?
-                            </Link>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full px-6 py-4 bg-white hover:bg-zinc-200 text-black font-bold rounded-xl transition-all hover:translate-y-[-1px] active:translate-y-[1px] shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {loading ? (
-                                <Loader2 size={18} className="animate-spin" />
-                            ) : (
-                                <>
-                                    Sign In <ArrowRight size={18} />
-                                </>
-                            )}
-                        </button>
-                    </form>
-
-                    {/* No Signup Message */}
-                    <div className="mt-8 pt-8 border-t border-white/5">
-                        <div className="bg-zinc-800/30 border border-zinc-700/50 rounded-xl p-4 text-center">
-                            <p className="text-sm text-zinc-300 mb-1">
-                                <strong className="text-zinc-200">Restricted Access</strong>
-                            </p>
-                            <p className="text-xs text-zinc-500 mb-3">
-                                This is a secure enterprise environment.
-                            </p>
-                            <Link
-                                href="/#request-access"
-                                className="inline-block text-xs text-zinc-400 hover:text-zinc-300 font-bold uppercase tracking-wide transition-colors"
-                            >
-                                Request Access →
-                            </Link>
+                {/* Form - Direct on page */}
+                <motion.form
+                    onSubmit={handleSubmit}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="space-y-6 mb-8"
+                >
+                    <div>
+                        <label className="block text-sm font-semibold text-zinc-300 mb-3">
+                            Email Address
+                        </label>
+                        <div className="relative group">
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-zinc-400 transition-colors" size={20} />
+                            <input
+                                type="email"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full pl-12 pr-4 py-4 bg-[#0a0f1c]/60 border border-zinc-800 rounded-xl text-white focus:border-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-700/50 transition-all placeholder:text-zinc-600"
+                                placeholder="you@company.com"
+                            />
                         </div>
                     </div>
-                </div>
+
+                    <div>
+                        <label className="block text-sm font-semibold text-zinc-300 mb-3">
+                            Password
+                        </label>
+                        <div className="relative group">
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-zinc-400 transition-colors" size={20} />
+                            <input
+                                type="password"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full pl-12 pr-4 py-4 bg-[#0a0f1c]/60 border border-zinc-800 rounded-xl text-white focus:border-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-700/50 transition-all placeholder:text-zinc-600"
+                                placeholder="Enter your password"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm pt-2">
+                        <label className="flex items-center gap-2 text-zinc-400 cursor-pointer hover:text-zinc-300 transition-colors">
+                            <input type="checkbox" className="rounded border-zinc-700 bg-[#0a0f1c]/60 text-zinc-500 focus:ring-0 focus:ring-offset-0 checked:bg-zinc-600" />
+                            Remember me
+                        </label>
+                        <Link href="/auth/forgot-password" className="text-zinc-400 hover:text-white transition-colors font-medium">
+                            Forgot password?
+                        </Link>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full px-6 py-4 bg-white hover:bg-zinc-200 text-black font-bold rounded-xl transition-all hover:-translate-y-0.5 active:translate-y-0 shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-8"
+                    >
+                        {loading ? (
+                            <Loader2 size={20} className="animate-spin" />
+                        ) : (
+                            <>
+                                Sign In <ArrowRight size={20} />
+                            </>
+                        )}
+                    </button>
+                </motion.form>
+
+                {/* Request Access */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="border-t border-white/5 pt-8 text-center"
+                >
+                    <p className="text-sm text-zinc-400 mb-3">
+                        Don't have access yet?
+                    </p>
+                    <Link
+                        href="/#request-access"
+                        className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white font-semibold transition-colors"
+                    >
+                        Request Enterprise Access <ArrowRight size={16} />
+                    </Link>
+                </motion.div>
 
                 {/* Footer */}
-                <p className="text-center mt-8 text-sm text-zinc-600">
+                <p className="text-center mt-12 text-sm text-zinc-600">
                     &copy; 2026 ForgeDev Inc.
                 </p>
-            </motion.div>
+            </div>
         </div>
     );
 }

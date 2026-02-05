@@ -39,6 +39,10 @@ model User {
   
   role          Role      @default(VIEWER) // Global role: OWNER, ADMIN, EDITOR, VIEWER (mapped from existing enum, but making it explicit on User)
   status        UserStatus @default(PENDING) // New field for access request
+  
+  // Password reset
+  resetToken        String?   
+  resetTokenExpiry  DateTime?
 }
 
 enum UserStatus {

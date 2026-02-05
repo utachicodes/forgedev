@@ -41,25 +41,17 @@ export default function Home() {
                 {/* Hero Section */}
                 <section className="px-6 pb-32 pt-12 relative">
                     <div className="max-w-5xl mx-auto text-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700 text-zinc-300 text-xs font-semibold mb-8"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-zinc-500 animate-pulse" />
-                            Introducing ForgeDev Enterprise v2.0
-                        </motion.div>
+
 
                         <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
+                            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                             className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-[1.1] text-balance"
                         >
-                            Build software <br />
+                            The complete platform for{' '}
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-500">
-                                at the speed of thought.
+                                modern development.
                             </span>
                         </motion.h1>
 
@@ -69,7 +61,7 @@ export default function Home() {
                             transition={{ duration: 0.5, delay: 0.2 }}
                             className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 leading-relaxed text-balance"
                         >
-                            The unified engineering platform that synchronizes your entire development lifecycle. From prototype to production, in one seamless environment.
+                            AI/ML training, web development, DevOps automation, and everything in between. Use what you need, when you need it—all in one powerful environment.
                         </motion.p>
 
                         <motion.div
@@ -96,33 +88,33 @@ export default function Home() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             <Feature
                                 icon={<Terminal className="text-blue-400" />}
-                                title="Unified Workflow"
-                                desc="Consolidate disparate tools into one cohesive interface. Manage code, infrastructure, and deployment without context switching."
+                                title="AI/ML Training"
+                                desc="Train models with PyTorch, TensorFlow, or Scikit-learn. Upload datasets, configure hyperparameters, and monitor training in real-time with GPU acceleration."
                             />
                             <Feature
                                 icon={<Activity className="text-emerald-400" />}
-                                title="Real-time Telemetry"
-                                desc="Instant visibility into system performance. Monitor metrics, logs, and traces in a single, correlated view."
+                                title="Web Development Suite"
+                                desc="Build modern web applications with Next.js, React, and TypeScript. Integrated code editing, live preview, and component libraries included."
                             />
                             <Feature
                                 icon={<Layers className="text-purple-400" />}
-                                title="Infrastructure as Code"
-                                desc="Define your entire stack with code. Version control your infrastructure alongside your application logic."
+                                title="DevOps Automation"
+                                desc="Pre-configured CI/CD pipelines, multi-cloud deployment (Vercel, Railway, AWS), and infrastructure as code management."
                             />
                             <Feature
                                 icon={<ShieldCheck className="text-orange-400" />}
-                                title="Enterprise Security"
-                                desc="Built-in compliance monitoring, role-based access control, and automated security scanning."
+                                title="Dataset Management"
+                                desc="Version-controlled dataset storage for images, CSV, JSON, and video. Built-in preprocessing pipelines and data augmentation."
                             />
                             <Feature
                                 icon={<Globe2 className="text-cyan-400" />}
-                                title="Global Edge Network"
-                                desc="Deploy instantly to 35+ regions worldwide. Automatic failover and load balancing included."
+                                title="Model Deployment"
+                                desc="Export trained models in multiple formats (PyTorch, TensorFlow, ONNX) or deploy as API endpoints with one click."
                             />
                             <Feature
                                 icon={<Zap className="text-yellow-400" />}
-                                title="Instant Preview"
-                                desc="Share work-in-progress with stakeholders via instant, ephemeral preview environments for every PR."
+                                title="Unified Interface"
+                                desc="Access all features from one platform. Switch between AI training, web development, and DevOps without leaving your workflow."
                             />
                         </div>
                     </div>
@@ -134,9 +126,9 @@ export default function Home() {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-8">
                             Enterprise Access
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6">Simple, Transparent Pricing</h2>
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6">Enterprise Pricing</h2>
                         <p className="text-zinc-400 max-w-2xl mx-auto mb-16 text-lg">
-                            One plan. Unlimited potential. Everything you need to scale your engineering team.
+                            Professional-grade development infrastructure with comprehensive support and unlimited access to all platform features.
                         </p>
 
                         <div className="max-w-md mx-auto relative group">
@@ -144,8 +136,7 @@ export default function Home() {
                             <div className="relative p-8 rounded-2xl bg-[#0c0f16] border border-white/10 shadow-2xl">
                                 <h3 className="text-xl font-bold text-white mb-2">Enterprise License</h3>
                                 <div className="flex items-baseline justify-center gap-2 mb-6">
-                                    <span className="text-5xl font-bold text-white">10,000</span>
-                                    <span className="text-xl font-bold text-zinc-500">FCFA</span>
+                                    <span className="text-5xl font-bold text-white">10,000 FCFA</span>
                                     <span className="text-sm text-zinc-500">/month</span>
                                 </div>
                                 <ul className="space-y-4 mb-8 text-left">
