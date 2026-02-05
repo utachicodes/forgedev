@@ -1,4 +1,7 @@
-import Link from 'next/link';
+'use client';
+
+import { Layout, Box, Users, Settings } from 'lucide-react';
+import { Sidebar } from '../../components/Sidebar';
 
 export default function WorkspaceLayout({
     children,
@@ -7,24 +10,22 @@ export default function WorkspaceLayout({
     children: React.ReactNode
     params: { slug: string }
 }) {
+    const navItems = [
+        { href: `/w/${params.slug}`, icon: Layout, label: 'Overview' },
+        { href: `/w/${params.slug}/projects`, icon: Box, label: 'Projects' },
+        { href: `/w/${params.slug}/members`, icon: Users, label: 'Members' },
+        { href: `/w/${params.slug}/settings`, icon: Settings, label: 'Settings' },
+    ];
+
     return (
-        <div className="flex min-h-screen">
-            {/* Reusing a similar sidebar for now, but contextual to workspace */}
-            <aside className="w-64 bg-zinc-900 border-r border-zinc-800 text-white flex flex-col">
-                <div className="p-4 border-b border-zinc-800 font-bold uppercase tracking-wider text-xs text-zinc-500">
-                    WORKSPACE
-                </div>
-                <div className="p-4 font-bold text-lg">
-                    {params.slug}
-                </div>
-                <nav className="flex-1 px-2 space-y-1">
-                    <Link href={`/w/${params.slug}`} className="block px-3 py-2 rounded hover:bg-zinc-800">Overview</Link>
-                    <Link href={`/w/${params.slug}/projects`} className="block px-3 py-2 rounded hover:bg-zinc-800">Projects</Link>
-                    <Link href={`/w/${params.slug}/members`} className="block px-3 py-2 rounded hover:bg-zinc-800">Members</Link>
-                    <Link href={`/w/${params.slug}/settings`} className="block px-3 py-2 rounded hover:bg-zinc-800">Settings</Link>
-                </nav>
-            </aside>
-            <main className="flex-1 bg-zinc-950 text-white">
+        <div className="flex min-h-screen bg-[#0d1117] text-white selection:bg-blue-500/30">
+            <Sidebar
+                brandName={params.slug.toUpperCase()}
+                brandColor="blue"
+                items={navItems}
+            />
+            <main className="flex-1 bg-[#09090b] text-white overflow-y-auto mesh-gradient relative">
+                <div className="absolute inset-0 bg-blue-500/5 blur-[100px] pointer-events-none -z-10" />
                 {children}
             </main>
         </div>

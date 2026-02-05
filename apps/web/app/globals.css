@@ -4,20 +4,75 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Cosmic Navy / Deep Space Theme */
+    --background: 225 30% 2%;
+    /* #030508 - Very deep, almost black navy */
+    --foreground: 210 20% 98%;
+
+    --card: 225 30% 4%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 225 30% 4%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 215 25% 10%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 20% 10%;
+    --input: 215 20% 10%;
+    --ring: 224 76% 48%;
   }
- 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-[#0a0c10]/60 backdrop-blur-xl border border-white/[0.08];
+  }
+
+  .glass-card {
+    @apply bg-[#0f1218]/50 backdrop-blur-2xl border border-white/[0.05] shadow-[0_8px_32px_rgba(0, 0, 0, 0.4)] hover:border-white/[0.1] hover:bg-[#13161c]/60 transition-all duration-500 ease-out;
+  }
+
+  .glass-card-hover {
+    @apply hover:shadow-[0_0_40px_-10px_rgba(59, 130, 246, 0.3)] hover:border-blue-500/30;
+  }
+
+  /* Text Glows */
+  .text-glow {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  .text-glow-blue {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+
+  /* Background Effects */
+  .mesh-gradient {
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+  }
+
+  .grid-pattern {
+    background-size: 50px 50px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
   }
 }
 
 body {
-    @apply bg-background text-foreground;
+  @apply bg-[#030508] text-white selection:bg-blue-500/30 font-sans antialiased overflow-x-hidden;
 }
