@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -78,6 +79,7 @@ model Project {
   datasets    Dataset[]
   models      Model[]
   experiments Experiment[]
+  trainingJobs TrainingJob[]
 
   // DevOps Specific
   pipelines   Pipeline[]
@@ -86,38 +88,167 @@ model Project {
 
 // --- AI/ML Module ---
 
-model Dataset {
-  id          String    @id @default(uuid())
-  projectId   String
-  name        String
-  s3Path      String
-  sizeBytes   BigInt
-  createdAt   DateTime  @default(now())
+enum DatasetType {
+  IMAGE
+  TEXT
+  TABULAR
+  VIDEO
+  AUDIO
+}
 
-  project     Project   @relation(fields: [projectId], references: [id])
+enum DatasetFormat {
+  CSV
+  JSON
+  IMAGES_ZIP
+  VIDEO_ZIP
+  PARQUET
+  TFRECORDS
+}
+
+enum ModelType {
+  CLASSIFICATION
+  DETECTION
+  SEGMENTATION
+  REGRESSION
+  CLUSTERING
+  GENERATION
+  NLP
+}
+
+enum Framework {
+  PYTORCH
+  TENSORFLOW
+  SCIKIT_LEARN
+  HUGGINGFACE
+  KERAS
+}
+
+enum TrainingStatus {
+  QUEUED
+  RUNNING
+  PAUSED
+  COMPLETED
+  FAILED
+  STOPPED
+}
+
+model Dataset {
+  id              String        @id @default(uuid())
+  projectId       String
+  name            String
+  description     String?
+  type            DatasetType
+  format          DatasetFormat
+  storagePath     String        // S3/local path
+  sizeBytes       BigInt
+  numSamples      Int?
+  preprocessConfig Json?        // Preprocessing pipeline config
+  splits          Json?         // {train: 0.7, val: 0.15, test: 0.15}
+  metadata        Json?         // Custom metadata (class distribution, etc.)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  project         Project       @relation(fields: [projectId], references: [id])
+  models          Model[]
+  trainingJobs    TrainingJob[]
 }
 
 model Model {
+  id              String        @id @default(uuid())
+  projectId       String
+  datasetId       String?
+  name            String
+  description     String?
+  version         String
+  framework       Framework
+  modelType       ModelType
+  status          TrainingStatus
+  
+  // Training configuration
+  hyperparameters Json?         // {lr, batch_size, epochs, optimizer, etc.}
+  architecture    String?       // ResNet50, YOLO, custom, etc.
+  
+  // Results
+  metrics         Json?         // {accuracy, loss, f1, mAP, etc.}
+  trainDuration   Int?          // seconds
+  
+  // Storage
+  artifactUrl     String?       // Model weights/checkpoint URL
+  exportedFormats Json?         // {onnx: "url", torchscript: "url"}
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  project         Project       @relation(fields: [projectId], references: [id])
+  dataset         Dataset?      @relation(fields: [datasetId], references: [id])
+  checkpoints     ModelCheckpoint[]
+  trainingJob     TrainingJob?
+}
+
+model ModelCheckpoint {
   id          String    @id @default(uuid())
-  projectId   String
-  name        String
-  version     String
-  framework   String    // PyTorch, TensorFlow
-  status      String    // TRAINING, READY, FAILED
-  metrics     Json?     // Accuracy, F1, etc.
-  artifactUrl String?
+  modelId     String
+  epoch       Int
+  metrics     Json      // Metrics at this checkpoint
+  checkpointUrl String  // Storage URL
   createdAt   DateTime  @default(now())
 
-  project     Project   @relation(fields: [projectId], references: [id])
+  model       Model     @relation(fields: [modelId], references: [id], onDelete: Cascade)
+}
+
+model TrainingJob {
+  id              String        @id @default(uuid())
+  projectId       String
+  modelId         String        @unique
+  datasetId       String
+  
+  framework       Framework
+  status          TrainingStatus @default(QUEUED)
+  
+  // Configuration
+  config          Json          // Complete training config
+  gpuEnabled      Boolean       @default(false)
+  
+  // Progress tracking
+  currentEpoch    Int           @default(0)
+  totalEpochs     Int
+  progress        Float         @default(0) // 0-100
+  
+  // Metrics
+  liveMetrics     Json?         // Latest metrics
+  metricsHistory  Json?         // Full history [{epoch, loss, acc}, ...]
+  
+  // Logs
+  logsUrl         String?       // Storage URL for full logs
+  lastLogLines    String?       // Last 100 lines for quick view
+  
+  // Resource usage
+  cpuUsage        Float?
+  memoryUsage     Float?
+  gpuUsage        Float?
+  
+  // Timing
+  startedAt       DateTime?
+  endedAt         DateTime?
+  estimatedEta    DateTime?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  project         Project       @relation(fields: [projectId], references: [id])
+  model           Model         @relation(fields: [modelId], references: [id])
+  dataset         Dataset       @relation(fields: [datasetId], references: [id])
 }
 
 model Experiment {
   id          String    @id @default(uuid())
   projectId   String
   name        String
-  params      Json
-  metrics     Json?
-  status      String
+  description String?
+  framework   Framework
+  params      Json      // Hyperparameters tried
+  metrics     Json?     // Results
+  status      TrainingStatus
   startedAt   DateTime  @default(now())
   endedAt     DateTime?
 
