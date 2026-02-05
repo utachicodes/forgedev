@@ -9,6 +9,11 @@ import uuid
 import json
 import asyncio
 from pathlib import Path
+from dotenv import load_dotenv
+from groq import Groq
+
+# Load environment variables
+load_dotenv()
 
 # Create necessary directories
 UPLOAD_DIR = Path("./uploads")
@@ -29,6 +34,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Initialize Groq client for LLM features
+groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
 
 # ===== ENUMS =====
 
@@ -470,6 +479,68 @@ async def segment_image(file: UploadFile = File(...), model_id: str = ""):
         "segmentation_map": "base64_encoded_mask",
         "classes": ["background", "person", "car"]
     }
+
+# ==================== Groq LLM Endpoints ====================
+
+class ChatMessage(BaseModel):
+    role: str = Field(..., description="Role: 'system', 'user', or 'assistant'")
+    content: str = Field(..., description="Message content")
+
+class ChatRequest(BaseModel):
+    messages: List[ChatMessage]
+    model: str = Field(default="llama-3.3-70b-versatile")
+    temperature: float = Field(default=0.7, ge=0, le=2)
+    max_tokens: Optional[int] = Field(default=None)
+
+class CodeGenerationRequest(BaseModel):
+    prompt: str = Field(..., description="Description of code to generate")
+    language: str = Field(default="python")
+    temperature: float = Field(default=0.2, ge=0, le=2)
+
+class VisionRequest(BaseModel):
+    image_url: str
+    prompt: str = Field(default="What's in this image?")
+    model: str = Field(default="llama-3.2-90b-vision-preview")
+
+@app.post("/llm/chat")
+async def chat_completion(request: ChatRequest):
+    """Chat completion using Groq"""
+    try:
+        msgs = [{"role": m.role, "content": m.content} for m in request.messages]
+        response = groq_client.chat.completions.create(
+            model=request.model,
+            messages=msgs,
+            temperature=request.temperature,
+            max_tokens=request.max_tokens
+        )
+        return {
+            "content": response.choices[0].message.content,
+            "tokens": response.usage.total_tokens
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/llm/code-gen")
+async def generate_code(request: CodeGenerationRequest):
+    """Generate code using Groq"""
+    try:
+        response = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": f"Expert {request.language} programmer"},
+                {"role": "user", "content": request.prompt}
+            ],
+            temperature=request.temperature
+        )
+        return {"code": response.choices[0].message.content}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/llm/models")
+async def list_models():
+    """List Groq models"""
+    return {"models": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]}
+
 
 if __name__ == "__main__":
     import uvicorn
