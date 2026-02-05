@@ -16,6 +16,7 @@ import {
     Play,
     Square,
     Download,
+    Settings,
 } from "lucide-react";
 import Link from "next/link";
 import { Line } from "react-chartjs-2";
