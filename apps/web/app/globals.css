@@ -42,11 +42,16 @@
   }
 
   .glass-card {
-    @apply bg-[#0f1218]/50 backdrop-blur-2xl border border-white/[0.05] shadow-[0_8px_32px_rgba(0, 0, 0, 0.4)] hover:border-white/[0.1] hover:bg-[#13161c]/60 transition-all duration-500 ease-out;
+    @apply bg-[#0f1218]/50 backdrop-blur-2xl border border-white/[0.05] hover:border-white/[0.1] hover:bg-[#13161c]/60 transition-all duration-500 ease-out;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 0 40px -10px rgba(59, 130, 246, 0.3);
   }
 
   .glass-card-hover {
-    @apply hover:shadow-[0_0_40px_-10px_rgba(59, 130, 246, 0.3)] hover:border-blue-500/30;
+    @apply hover:border-blue-500/30;
   }
 
   /* Text Glows */
