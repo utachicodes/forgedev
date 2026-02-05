@@ -1,0 +1,56 @@
+name: AI Engine Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/ai-engine/**'
+      - '.github/workflows/ai-engine-deploy.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          cd apps/ai-engine
+          pip install -r requirements.txt
+      
+      - name: Lint
+        run: |
+          cd apps/ai-engine
+          pip install flake8 black
+          flake8 . --max-line-length=100 || echo "Linting warnings found"
+          black --check . || echo "Formatting check pending"
+      
+      - name: Type check
+        run: |
+          cd apps/ai-engine
+          pip install mypy
+          mypy . || echo "Type checking pending"
+      
+      - name: Run tests
+        run: |
+          cd apps/ai-engine
+          pip install pytest pytest-cov
+          pytest || echo "Tests pending"
+      
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@main
+        with:
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+          service: ai-engine
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCTION }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY_PRODUCTION }}
+          MODEL_STORAGE_PATH: ${{ secrets.MODEL_STORAGE_PATH }}

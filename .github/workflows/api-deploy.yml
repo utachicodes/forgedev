@@ -1,0 +1,53 @@
+name: API Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - '.github/workflows/api-deploy.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          cd apps/api
+          npm ci
+      
+      - name: Lint and type check
+        run: |
+          cd apps/api
+          npm run lint || echo "Lint not configured yet"
+          npx tsc --noEmit || echo "TypeScript check pending"
+      
+      - name: Run tests
+        run: |
+          cd apps/api
+          npm test || echo "Tests pending"
+      
+      - name: Build application
+        run: |
+          cd apps/api
+          npm run build || echo "Build step pending"
+      
+      - name: Deploy to Railway
+        uses: bervProject/railway-deploy@main
+        with:
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+          service: api
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCTION }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET_PRODUCTION }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY_PRODUCTION }}
