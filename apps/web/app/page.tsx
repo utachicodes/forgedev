@@ -316,10 +316,10 @@ export default function Home() {
                                 </div>
                                 <ul className="space-y-4 mb-8 text-left">
                                     {[
-                                        "Unlimited AI Model Training",
-                                        "Full-Stack Development Suite",
-                                        "Global Edge Deployment",
-                                        "24/7 Dedicated Support"
+                                        "50 AI Training Hours/Month",
+                                        "10 Active Projects",
+                                        "100GB Storage & Bandwidth",
+                                        "24/7 Community Support"
                                     ].map((feature, index) => (
                                         <motion.li
                                             key={feature}
