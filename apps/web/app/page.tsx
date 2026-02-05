@@ -353,7 +353,7 @@ export default function Home() {
 function FeatureCard({ icon, title, description }: any) {
     return (
         <div className="bg-[#161b22] p-8 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors">
-            <div className="mb-4 bg-[#0d1117] w-12 h-12 rounded-lg flex items-ent justify-center border border-zinc-800">
+            <div className="mb-4 bg-[#0d1117] w-12 h-12 rounded-lg flex items-center justify-center border border-zinc-800">
                 {icon}
             </div>
             <h3 className="text-xl font-semibold mb-3 text-zinc-100">{title}</h3>
