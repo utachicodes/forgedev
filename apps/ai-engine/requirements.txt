@@ -34,3 +34,7 @@ requests==2.31.0
 # Pydantic for validation
 pydantic==2.5.2
 pydantic-settings==2.1.0
+
+# Groq SDK for LLM inference
+groq==0.4.2
+python-dotenv==1.0.0
