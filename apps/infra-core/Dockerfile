@@ -1,14 +1,12 @@
-FROM golang:1.21-alpine
+FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY go.mod ./
-# COPY go.sum ./
-# RUN go mod download
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-RUN go build -o main .
+COPY main.py .
 
 EXPOSE 8080
-CMD ["./main"]
+
+CMD ["python", "main.py"]
