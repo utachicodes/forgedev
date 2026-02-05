@@ -46,7 +46,7 @@ test.describe('Model Gallery', () => {
         await page.waitForSelector('[class*="glass-card"]', { timeout: 5000 });
 
         // Enter search query
-        const searchInput = page.getByPlaceholderText(/Search models/i);
+        const searchInput = page.getByPlaceholder(/Search models/i);
         await searchInput.fill('ResNet');
 
         // Results should be filtered (depends on mock data)
