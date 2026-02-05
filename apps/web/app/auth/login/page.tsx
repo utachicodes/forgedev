@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Terminal, Lock, Mail, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Lock, Mail, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { auth } from '../../../lib/auth';
+import { Logo } from '../../../components/Logo';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -50,19 +52,23 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-[#050914] text-white flex items-center justify-center px-6">
-            <div className="absolute inset-0 mesh-gradient opacity-30" />
+            <div className="fixed inset-0 grid-pattern pointer-events-none z-0" />
+            <div className="fixed inset-0 mesh-gradient pointer-events-none z-0" />
 
-            <div className="w-full max-w-md relative z-10">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full max-w-md relative z-10"
+            >
                 {/* Logo */}
-                <Link href="/" className="flex items-center justify-center gap-2 mb-10 group">
-                    <div className="p-2 rounded bg-blue-600/10 border border-blue-500/20 group-hover:bg-blue-600/20 transition-colors">
-                        <Terminal size={24} className="text-blue-500" />
-                    </div>
+                <Link href="/" className="flex items-center justify-center gap-3 mb-10 group">
+                    <Logo size={28} className="text-zinc-100 group-hover:text-white transition-colors" />
                     <span className="text-2xl font-bold tracking-tight text-zinc-100">ForgeDev</span>
                 </Link>
 
                 {/* Login Card */}
-                <div className="glass-card p-10 border border-white/5 rounded-2xl shadow-2xl bg-[#0a0f1c]/80 backdrop-blur-xl">
+                <div className="p-10 border border-white/5 rounded-2xl shadow-2xl bg-[#0a0f1c]/80 backdrop-blur-xl">
                     <div className="text-center mb-8">
                         <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
                         <p className="text-zinc-400 text-sm">
@@ -89,7 +95,7 @@ export default function LoginPage() {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-[#050914]/50 border border-zinc-800 rounded-lg text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-700"
+                                    className="w-full pl-11 pr-4 py-3 bg-[#050914]/50 border border-zinc-800 rounded-lg text-white focus:border-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-700"
                                     placeholder="you@company.com"
                                 />
                             </div>
@@ -106,7 +112,7 @@ export default function LoginPage() {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-11 pr-4 py-3 bg-[#050914]/50 border border-zinc-800 rounded-lg text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-700"
+                                    className="w-full pl-11 pr-4 py-3 bg-[#050914]/50 border border-zinc-800 rounded-lg text-white focus:border-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-700"
                                     placeholder="••••••••"
                                 />
                             </div>
@@ -114,10 +120,10 @@ export default function LoginPage() {
 
                         <div className="flex items-center justify-between text-sm">
                             <label className="flex items-center gap-2 text-zinc-400 cursor-pointer hover:text-zinc-300">
-                                <input type="checkbox" className="rounded border-zinc-700 bg-[#050914]/50 text-blue-500 focus:ring-0 checked:bg-blue-500" />
+                                <input type="checkbox" className="rounded border-zinc-700 bg-[#050914]/50 text-zinc-500 focus:ring-0 checked:bg-zinc-600" />
                                 Remember me
                             </label>
-                            <Link href="/auth/forgot-password" className="text-blue-400 hover:text-blue-300 transition-colors font-medium">
+                            <Link href="/auth/forgot-password" className="text-zinc-400 hover:text-zinc-300 transition-colors font-medium">
                                 Forgot password?
                             </Link>
                         </div>
@@ -125,7 +131,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full px-6 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all hover:translate-y-[-1px] active:translate-y-[1px] shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full px-6 py-4 bg-white hover:bg-zinc-200 text-black font-bold rounded-xl transition-all hover:translate-y-[-1px] active:translate-y-[1px] shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? (
                                 <Loader2 size={18} className="animate-spin" />
@@ -139,16 +145,16 @@ export default function LoginPage() {
 
                     {/* No Signup Message */}
                     <div className="mt-8 pt-8 border-t border-white/5">
-                        <div className="bg-blue-500/5 border border-blue-500/10 rounded-xl p-4 text-center">
+                        <div className="bg-zinc-800/30 border border-zinc-700/50 rounded-xl p-4 text-center">
                             <p className="text-sm text-zinc-300 mb-1">
-                                <strong className="text-blue-400">Restricted Access</strong>
+                                <strong className="text-zinc-200">Restricted Access</strong>
                             </p>
                             <p className="text-xs text-zinc-500 mb-3">
                                 This is a secure enterprise environment.
                             </p>
                             <Link
                                 href="/#request-access"
-                                className="inline-block text-xs text-blue-400 hover:text-blue-300 font-bold uppercase tracking-wide transition-colors"
+                                className="inline-block text-xs text-zinc-400 hover:text-zinc-300 font-bold uppercase tracking-wide transition-colors"
                             >
                                 Request Access →
                             </Link>
@@ -160,7 +166,7 @@ export default function LoginPage() {
                 <p className="text-center mt-8 text-sm text-zinc-600">
                     &copy; 2026 ForgeDev Inc.
                 </p>
-            </div>
+            </motion.div>
         </div>
     );
 }
