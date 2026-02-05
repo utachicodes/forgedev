@@ -28,7 +28,7 @@ ForgeDev is an enterprise platform with manual account creation.
 5. **Wait for approval**: You'll receive login credentials via email within 1-2 business days
 
 ### Subscription Details
-- **Price**: $10,000/month
+- **Price**: 10,000 FCFA/month
 - **Includes**: All platform features, unlimited users, 24/7 support
 - **Billing**: Enterprise invoicing
 

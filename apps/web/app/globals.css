@@ -4,80 +4,92 @@
 
 @layer base {
   :root {
-    /* Cosmic Navy / Deep Space Theme */
-    --background: 225 30% 2%;
-    /* #030508 - Very deep, almost black navy */
-    --foreground: 210 20% 98%;
+    /* Premium Deep Space Theme */
+    --background: 222 47% 4%;
+    /* #050914 - Deeper, richer navy black */
+    --foreground: 210 40% 98%;
 
-    --card: 225 30% 4%;
-    --card-foreground: 210 20% 98%;
+    --card: 222 47% 6%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 225 30% 4%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 40% 98%;
 
     --primary: 217 91% 60%;
-    --primary-foreground: 210 20% 98%;
+    --primary-foreground: 222 47% 4%;
 
-    --secondary: 215 25% 15%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 217 19% 12%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 215 25% 10%;
+    --muted: 217 19% 10%;
     --muted-foreground: 215 20% 65%;
 
     --accent: 217 91% 60%;
-    --accent-foreground: 210 20% 98%;
+    --accent-foreground: 222 47% 4%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 20% 10%;
-    --input: 215 20% 10%;
-    --ring: 224 76% 48%;
+    --border: 217 19% 12%;
+    --input: 217 19% 12%;
+    --ring: 217 91% 60%;
+    --radius: 0.75rem;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-[#0a0c10]/60 backdrop-blur-xl border border-white/[0.08];
+    @apply bg-[#050914]/80 backdrop-blur-xl border border-white/[0.08];
   }
 
   .glass-card {
-    @apply bg-[#0f1218]/50 backdrop-blur-2xl border border-white/[0.05] hover:border-white/[0.1] hover:bg-[#13161c]/60 transition-all duration-500 ease-out;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    @apply bg-[#0a0f1c]/60 backdrop-blur-3xl border border-white/[0.05] hover:border-white/[0.1] hover:bg-[#0f1629]/70 transition-all duration-500 ease-out;
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
   }
 
   .glass-card:hover {
-    box-shadow: 0 0 40px -10px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 40px -4px rgba(0, 0, 0, 0.4),
+      0 0 20px -5px rgba(59, 130, 246, 0.15);
   }
 
-  .glass-card-hover {
-    @apply hover:border-blue-500/30;
+  /* Sophisticated Typography */
+  .text-balance {
+    text-wrap: balance;
   }
 
-  /* Text Glows */
+  /* Refined Text Glows */
   .text-glow {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
   }
 
   .text-glow-blue {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    text-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
   }
 
-  /* Background Effects */
+  /* Premium Gradients */
   .mesh-gradient {
     background-image:
-      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+      radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 90% 60%, rgba(124, 58, 237, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 60%);
   }
 
+  /* Subtle Grid */
   .grid-pattern {
-    background-size: 50px 50px;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    background-size: 60px 60px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  @apply bg-[#030508] text-white selection:bg-blue-500/30 font-sans antialiased overflow-x-hidden;
+  @apply bg-[#050914] text-white selection:bg-blue-500/20 selection:text-blue-200 font-sans antialiased overflow-x-hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }

@@ -36,6 +36,16 @@ model User {
   memberships   WorkspaceMember[]
   projects      Project[]         @relation("ProjectOwner")
   activities    ActivityLog[]
+  
+  role          Role      @default(VIEWER) // Global role: OWNER, ADMIN, EDITOR, VIEWER (mapped from existing enum, but making it explicit on User)
+  status        UserStatus @default(PENDING) // New field for access request
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
 }
 
 model Workspace {

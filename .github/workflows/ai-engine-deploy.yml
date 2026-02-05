@@ -48,9 +48,9 @@ jobs:
       - name: Deploy to Railway
         uses: bervProject/railway-deploy@main
         with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
           service: ai-engine
         env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCTION }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY_PRODUCTION }}
           MODEL_STORAGE_PATH: ${{ secrets.MODEL_STORAGE_PATH }}

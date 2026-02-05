@@ -1,4 +1,15 @@
 {
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=@forgedev/web\" \"npm run dev --workspace=@forgedev/api\"",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
   "dependencies": {
     "groq-sdk": "^0.37.0"
   }
