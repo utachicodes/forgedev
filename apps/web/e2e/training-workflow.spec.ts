@@ -71,6 +71,8 @@ test.describe('Training Workflow', () => {
     });
 
     test('displays hyperparameter controls on step 3', async ({ page }) => {
+        test.setTimeout(30000);
+
         // Navigate to step 3
         // Step 1: Select framework
         await page.getByText(/PyTorch/i).first().click();
@@ -88,7 +90,7 @@ test.describe('Training Workflow', () => {
 
         // Step 3: Check for hyperparameter controls
         await page.waitForSelector('text=/Learning Rate|Batch Size|Epochs/i', { timeout: 10000 });
-    }, 30000);
+    });
 
     test('shows GPU toggle on hardware configuration step', async ({ page }) => {
         // This is a longer test that navigates through all steps
