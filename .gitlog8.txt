@@ -1,0 +1,115 @@
+﻿commit 7dce4a2a6ae38ad2ec29d7319f507896fc44b99b
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 26 12:29:35 2026 +0000
+
+    docs: add neural AI environment design document
+    
+    Full design for the ForgeDev platform pivot to a neural AI-native
+    workspace ΓÇö covering AppShell, Mindmap, Chat, Agent Creator, IDE,
+    Workflow Builder, Research Engine, and Model Abstraction Layer.
+    
+    Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+
+commit 6247a0169f15ade9e937ac812ecf6823fd6ad7d0
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 22:42:19 2026 +0000
+
+    Implement subscription limits: update pricing, add limits config, create API enforcement and usage dashboard
+
+commit 754f6a2871b3cb3b0f95356f94815c7167c8ce61
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 22:32:00 2026 +0000
+
+    Update pricing section: remove enterprise badges and simplify to monthly subscription
+
+commit fb0cecbb7cffc2acf86ae5c5e4b257fd1b02d797
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 22:19:41 2026 +0000
+
+    Refine platform UI: update pricing, remove version badge, redesign auth pages, implement password reset
+
+commit ac9dda602c09911331ed801523553702b6f88418
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 21:54:54 2026 +0000
+
+    feat: redesign landing and auth pages with consistent branding
+    
+    - Updated landing page hero: removed dashboard preview, added Framer Motion animations
+    - Changed CTAs to 'Request Access' and docs link to GitHub
+    - Replaced icon with Logo component throughout
+    - Redesigned login page with neutral colors and modern aesthetic
+    - Created forgot password page with success state and animations
+    - Fixed Terminal import error in landing page
+    - Ensured consistent branding across all auth flows
+
+commit 79abda5a9f8c60e157033715dd346596efa8b5dc
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 21:34:35 2026 +0000
+
+    fix: correct Railway deploy action syntax in workflows
+
+commit cfa01a738eddcf817a6d679f85c49b131ffdd4a4
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 20:43:36 2026 +0000
+
+    fix(ui): center feature icons by fixing typo in flex class
+
+commit 6293ffb8210bcc2908b0579664173ff0569c2144
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 20:34:12 2026 +0000
+
+    fix: resolve Playwright test timeout syntax error
+    
+    - Changed test timeout from second parameter to test.setTimeout() call
+    - Production build now completes successfully with no errors
+    - All 18 pages generated successfully
+    - TypeScript compilation passes cleanly
+
+commit d91b028af68d0e665c50a2e5de2511b03d1c5342
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 20:28:47 2026 +0000
+
+    fix: resolve TypeScript and test configuration errors
+    
+    - Created jest.setup.ts for jest-dom matchers
+    - Updated jest.config.js to use jest.setup.ts
+    - Removed app/w directory with invalid Sidebar import
+    - Fixed Playwright API: getByPlaceholderText -> getByPlaceholder
+    - All test configurations now properly configured
+
+commit 041a6c642de94f5c587aa864a5fdcd838011d24e
+Author: utachicodes <abdoullahaljersi@gmail.com>
+Date:   Thu Feb 5 18:36:41 2026 +0000
+
+    feat: complete deployment and CI/CD infrastructure for Priority 4
+    
+    GitHub Actions Workflows:
+    - ci.yml - Comprehensive CI for PRs (frontend, API, AI engine)
+    - frontend-deploy.yml - Vercel deployment with E2E tests
+    - api-deploy.yml - Railway API deployment
+    - ai-engine-deploy.yml - Railway AI engine deployment
+    
+    Deployment Configurations:
+    - vercel.json - Next.js frontend config with security headers
+    - apps/api/railway.json - API service configuration
+    - apps/ai-engine/railway.json - AI engine configuration
+    - .env.example - Environment variable template
+    
+    Documentation:
+    - docs/DEPLOYMENT.md - Complete deployment guide (400+ lines)
+      * Quick start instructions
+      * GitHub Actions setup
+      * Environment configuration
+      * Troubleshooting guide
+      * Monitoring and rollback procedures
+      * Custom domain setup
+      * Security best practices
+    
+    Features:
+    - Automated deployments on push to main
+    - CI checks on all pull requests
+    - Health checks for all services
+    - Automatic rollback capabilities
+    - Service-specific build configurations
+    
+    Ready for production deployment with proper GitHub secrets configuration.

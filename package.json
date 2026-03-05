@@ -3,7 +3,7 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=@forgedev/web\" \"npm run dev --workspace=@forgedev/api\"",
+    "dev": "concurrently \"npm run dev --workspace=forgedev-web\" \"npm run dev --workspace=forgedev-api\"",
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces"
   },

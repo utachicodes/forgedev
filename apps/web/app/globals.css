@@ -39,17 +39,27 @@
 
 @layer utilities {
   .glass {
-    @apply bg-[#050914]/80 backdrop-blur-xl border border-white/[0.08];
+    background-color: rgba(5, 9, 20, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .glass-card {
-    @apply bg-[#0a0f1c]/60 backdrop-blur-3xl border border-white/[0.05] hover:border-white/[0.1] hover:bg-[#0f1629]/70 transition-all duration-500 ease-out;
+    background-color: rgba(10, 15, 28, 0.6);
+    backdrop-filter: blur(48px);
+    -webkit-backdrop-filter: blur(48px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
   }
 
   .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(15, 22, 41, 0.7);
     box-shadow: 0 8px 40px -4px rgba(0, 0, 0, 0.4),
       0 0 20px -5px rgba(59, 130, 246, 0.15);
+    transform: translateY(-2px);
   }
 
   /* Sophisticated Typography */
@@ -90,6 +100,16 @@
 }
 
 body {
-  @apply bg-[#050914] text-white selection:bg-blue-500/20 selection:text-blue-200 font-sans antialiased overflow-x-hidden;
+  background-color: #050914;
+  color: #ffffff;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+::selection {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: #bfdbfe;
 }
